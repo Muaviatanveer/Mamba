@@ -49,7 +49,7 @@ In local Mac benchmark tests (macOS, `ab -n 20000 -c 100`):
 Clone the repository and set up the virtual environment:
 
 ```bash
-git clone https://github.com/mamba-lang/mamba.git
+git clone https://github.com/Muaviatanveer/Mamba.git
 cd Mamba
 python3 -m venv venv
 source venv/bin/activate

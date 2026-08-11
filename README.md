@@ -1,7 +1,15 @@
 # 🐍 Mamba Programming Language
 
-> **One Mamba Source → Multiple Execution Targets.**
+[![Release](https://img.shields.io/github/v/release/Muaviatanveer/Mamba?color=00e676&label=Latest%20Release)](https://github.com/Muaviatanveer/Mamba/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+> **One Mamba Source → Multiple Execution Targets.**  
 > A multi-target programming language offering the syntax simplicity of Python, the deployment ease of PHP, and the native performance of C++.
+
+---
+
+### 📦 Latest Release (v0.1.0)
+Download pre-built release binaries and the VS Code / Cursor Extension (`mamba-extension-v0.1.0.zip`) directly from [GitHub Releases](https://github.com/Muaviatanveer/Mamba/releases/latest).
 
 ---
 

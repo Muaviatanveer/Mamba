@@ -1,0 +1,10 @@
+let user = {
+    "name": "Muavia",
+    "project": "Mamba",
+    "role": "AI Engineer",
+    "version": "0.1.0"
+}
+
+route GET "/api/user" {
+    return json.stringify(user)
+}

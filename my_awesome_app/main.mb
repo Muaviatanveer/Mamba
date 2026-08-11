@@ -1,0 +1,8 @@
+import "helpers.mb"
+
+let app_name = "Mamba Web App"
+print("Starting " + app_name + "...")
+
+route GET "/api/info" {
+    print("Mamba API Hit!")
+}

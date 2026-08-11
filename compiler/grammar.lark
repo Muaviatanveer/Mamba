@@ -1,0 +1,71 @@
+start: statement*
+
+?statement: var_assign
+          | fn_def
+          | return_stmt
+          | if_stmt
+          | while_stmt
+          | try_stmt
+          | test_stmt
+          | assert_stmt
+          | route_def
+          | print_stmt
+          | expr_stmt
+
+var_assign: "let" CNAME "=" expr
+block: "{" statement* "}"
+fn_def: "fn" CNAME "(" [CNAME ("," CNAME)*] ")" block
+return_stmt: "return" expr
+if_stmt: "if" expr block ["else" block]
+while_stmt: "while" expr block
+try_stmt: "try" block "catch" "(" CNAME ")" block
+test_stmt: "test" ESCAPED_STRING block
+assert_stmt: "assert" "(" expr ")"
+route_def: "route" CNAME ESCAPED_STRING block
+print_stmt: "print" "(" expr ")"
+expr_stmt: expr
+
+?expr: comparison
+
+?comparison: expr ">" sum     -> gt
+           | expr "<" sum     -> lt
+           | expr "==" sum    -> eq
+           | expr "!=" sum    -> ne
+           | sum
+
+?sum: sum "+" term            -> add
+    | sum "-" term            -> sub
+    | term
+
+?term: term "*" factor        -> mul
+     | term "/" factor        -> div
+     | factor
+
+?factor: NUMBER               -> number
+       | ESCAPED_STRING       -> string
+       | dot_call
+       | fn_call
+       | index_access
+       | list
+       | map
+       | CNAME                -> var
+       | "(" expr ")"
+
+list: "[" [expr ("," expr)*] "]"
+map: "{" [map_pair ("," map_pair)*] "}"
+map_pair: (ESCAPED_STRING | CNAME) ":" expr
+index_access: (dot_call | fn_call | CNAME) "[" expr "]"
+dot_call: CNAME "." CNAME "(" [expr ("," expr)*] ")"
+fn_call: CNAME "(" [expr ("," expr)*] ")"
+
+COMMENT: /#[^\n]*/
+CPP_COMMENT: /\/\/[^\n]*/
+
+%import common.CNAME
+%import common.NUMBER
+%import common.ESCAPED_STRING
+%import common.WS
+
+%ignore COMMENT
+%ignore CPP_COMMENT
+%ignore WS

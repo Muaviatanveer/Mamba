@@ -1,0 +1,17 @@
+fn add(a, b) {
+    return a + b
+}
+
+fn multiply(a, b) {
+    return a * b
+}
+
+test "Addition Logic Test" {
+    let sum = add(15, 25)
+    assert(sum == 40)
+}
+
+test "Multiplication Logic Test" {
+    let product = multiply(6, 7)
+    assert(product == 42)
+}

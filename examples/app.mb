@@ -1,0 +1,12 @@
+fn add_numbers(a, b) {
+    return a + b
+}
+
+let sum = add_numbers(10, 20)
+
+print("Mamba Result:")
+print(sum)
+
+if sum > 20 {
+    print("Status: Calculation Passed!")
+}

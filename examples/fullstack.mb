@@ -1,0 +1,29 @@
+# 1. Initialize SQLite Database
+let res = db.open("fullstack.db")
+
+db.query("CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, title TEXT, content TEXT)")
+
+# 2. GET API: Fetch All Notes
+route GET "/api/notes" {
+    return json.stringify({
+        "status": "success",
+        "message": "Connected to Mamba C++ Backend!"
+    })
+}
+
+# 3. POST API: Create New Note
+route POST "/api/notes" {
+    let raw_payload = req.body()
+    let payload = json.parse(raw_payload)
+    
+    let title = payload["title"]
+    let content = payload["content"]
+    
+    db.query("INSERT INTO notes (title, content) VALUES ('" + title + "', '" + content + "')")
+    
+    return json.stringify({
+        "status": "created",
+        "title": title,
+        "content": content
+    })
+}

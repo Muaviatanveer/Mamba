@@ -1,0 +1,20 @@
+# 1. Initialize embedded SQLite Database
+let res = db.open("users.db")
+db.query("CREATE TABLE IF NOT EXISTS users (name TEXT, role TEXT)")
+
+# 2. REST API Endpoint to save users into SQLite
+route POST "/api/users" {
+    let raw_payload = req.body()
+    let payload = json.parse(raw_payload)
+    
+    let name = payload["name"]
+    let role = payload["role"]
+    
+    db.query("INSERT INTO users VALUES ('" + name + "', '" + role + "')")
+    
+    return json.stringify({
+        "status": "saved_in_sqlite_database",
+        "name": name,
+        "role": role
+    })
+}

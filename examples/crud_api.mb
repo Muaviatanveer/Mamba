@@ -1,0 +1,20 @@
+# 1. GET Route with Query Parameter (?q=...)
+route GET "/api/search" {
+    let query_term = req.query("q")
+    return json.stringify({
+        "status": "success",
+        "search_term": query_term
+    })
+}
+
+# 2. POST Route with JSON Body Payload
+route POST "/api/users" {
+    let raw_payload = req.body()
+    let payload = json.parse(raw_payload)
+    
+    return json.stringify({
+        "status": "created",
+        "name": payload["name"],
+        "role": payload["role"]
+    })
+}

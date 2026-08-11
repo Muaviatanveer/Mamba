@@ -1,0 +1,28 @@
+# 1. Test HashMap / Dictionary
+let user = {
+    "name": "Muavia",
+    "role": "AI Engineer"
+}
+
+print("User Name:")
+print(user["name"])
+
+# 2. Test File I/O
+file.write("hello_mamba.txt", "Mamba Language Phase 0.1 File Test")
+let file_content = file.read("hello_mamba.txt")
+
+print("File Read Output:")
+print(file_content)
+
+# 3. Test Error Handling
+try {
+    print("Executing inside try block...")
+} catch (err) {
+    print("Caught an error!")
+}
+
+# 4. Test HTTP Client
+let api_response = http.get("https://httpbin.org/ip")
+
+print("HTTP Response from Web API:")
+print(api_response)

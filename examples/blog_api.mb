@@ -1,0 +1,47 @@
+# 1. Initialize Embedded SQLite Database
+let res = db.open("blog.db")
+
+# Create Database Tables
+db.query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)")
+db.query("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, title TEXT, content TEXT, author TEXT)")
+
+# 2. System Info Endpoint
+route GET "/api/info" {
+    return json.stringify({
+        "app": "Mamba Blog API",
+        "version": "0.1.0",
+        "database": "Embedded SQLite",
+        "server": "Native C++ POSIX HTTP"
+    })
+}
+
+# 3. Create User Endpoint
+route POST "/api/users" {
+    let payload = json.parse(req.body())
+    let name = payload["name"]
+    let email = payload["email"]
+    
+    db.query("INSERT INTO users (name, email) VALUES ('" + name + "', '" + email + "')")
+    
+    return json.stringify({
+        "status": "user_created",
+        "name": name,
+        "email": email
+    })
+}
+
+# 4. Create Blog Post Endpoint
+route POST "/api/posts" {
+    let payload = json.parse(req.body())
+    let title = payload["title"]
+    let content = payload["content"]
+    let author = payload["author"]
+    
+    db.query("INSERT INTO posts (title, content, author) VALUES ('" + title + "', '" + content + "', '" + author + "')")
+    
+    return json.stringify({
+        "status": "post_published",
+        "title": title,
+        "author": author
+    })
+}

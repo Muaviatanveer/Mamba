@@ -1,0 +1,10 @@
+let original = "Hello Mamba Language"
+
+let uppercase = str.upper(original)
+let lowercase = str.lower(original)
+let replaced = str.replace(original, "Language", "Compiler")
+
+print("Original: " + original)
+print("Upper: " + uppercase)
+print("Lower: " + lowercase)
+print("Replaced: " + replaced)

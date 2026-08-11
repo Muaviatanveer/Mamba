@@ -1,0 +1,12 @@
+import "math_helper.mb"
+
+let base = 5
+let factor = 4
+let total = multiply(base, factor)
+
+print("Calculated from imported module:")
+print(total)
+
+route GET "/api/hello" {
+    print("Mamba Web Route /api/hello was hit!")
+}

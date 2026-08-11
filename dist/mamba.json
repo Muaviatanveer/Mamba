@@ -1,0 +1,6 @@
+{
+  "name": "Mamba App",
+  "version": "0.1.0",
+  "target": "cpp",
+  "binary": "mamba_app"
+}

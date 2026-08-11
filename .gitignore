@@ -1,0 +1,6 @@
+venv/
+build/
+*.db
+hello_mamba.txt
+.DS_Store
+__pycache__/

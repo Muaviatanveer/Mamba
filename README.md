@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="extension/icon.png" alt="Mamba Logo" width="150" />
+</p>
+
 # 🐍 Mamba Programming Language
 
 [![Release](https://img.shields.io/github/v/release/Muaviatanveer/Mamba?color=00e676&label=Latest%20Release)](https://github.com/Muaviatanveer/Mamba/releases/latest)

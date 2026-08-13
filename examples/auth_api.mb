@@ -1,0 +1,35 @@
+# =========================================================
+# Mamba Authentication Backend (SQLite + JSON API)
+# =========================================================
+
+let res = db.open("auth_db.sqlite")
+
+# Safe Table Setup
+db.query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, email TEXT UNIQUE, password TEXT)")
+
+# API 1: Register User
+route POST "/api/register" {
+    let payload = json.parse(req.body())
+    let email = payload["email"]
+    let password = payload["password"]
+    
+    try {
+        db.query("INSERT INTO users (email, password) VALUES (?, ?)", [email, password])
+        return json.stringify({ "status": "success", "message": "User registered successfully!" })
+    } catch (err) {
+        return json.stringify({ "status": "error", "message": "Email already exists." })
+    }
+}
+
+# API 2: Login User
+route POST "/api/login" {
+    let payload = json.parse(req.body())
+    let email = payload["email"]
+    
+    # In a real app we would query the specific password, but we'll mock success if email exists in payload
+    if str.len(email) > 0 {
+        return json.stringify({ "status": "success", "token": "mamba_auth_token_9981" })
+    } else {
+        return json.stringify({ "status": "error", "message": "Invalid Credentials" })
+    }
+}

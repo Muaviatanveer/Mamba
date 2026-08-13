@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mamba Auth App</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #0f111a;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-6">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function App() {
+            const [isLogin, setIsLogin] = React.useState(true);
+            const [email, setEmail] = React.useState("");
+            const [password, setPassword] = React.useState("");
+            const [msg, setMsg] = React.useState("");
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                const endpoint = isLogin ? '/api/login' : '/api/register';
+
+                fetch(`http://localhost:8000${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            setMsg(data.message || `Logged in! Token: ${data.token}`);
+                        } else {
+                            setMsg(data.message);
+                        }
+                    })
+                    .catch(() => setMsg("Failed to connect to Mamba Backend"));
+            };
+
+            return (
+                <div class="max-w-sm w-full bg-[#181a24] p-8 rounded-3xl border border-gray-800 shadow-2xl">
+                    <div class="text-center mb-6">
+                        <div class="text-4xl mb-2">🐍</div>
+                        <h1 class="text-2xl font-black text-white">{isLogin ? 'Login to Mamba' : 'Create Account'}</h1>
+                    </div>
+
+                    <form onSubmit={handleSubmit} class="space-y-4">
+                        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} class="w-full bg-[#0f111a] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-[#00e676]" required />
+                        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} class="w-full bg-[#0f111a] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-[#00e676]" required />
+                        <button type="submit" class="w-full bg-[#00e676] text-black font-extrabold py-3.5 rounded-xl">{isLogin ? 'Sign In' : 'Sign Up'}</button>
+                    </form>
+
+                    <p class="text-center mt-4 text-sm text-[#00e676]">{msg}</p>
+
+                    <p class="text-center mt-6 text-xs text-gray-500 cursor-pointer hover:text-white" onClick={() => setIsLogin(!isLogin)}>
+                        {isLogin ? "Need an account? Register" : "Already have an account? Login"}
+                    </p>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+
+</html>

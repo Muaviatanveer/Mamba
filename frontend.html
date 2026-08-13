@@ -3,86 +3,108 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mamba + React Fullstack Dashboard</title>
+    <title>Mamba Task Manager</title>
     <!-- React & Tailwind CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f111a;
+        }
+    </style>
 </head>
 
-<body class="bg-[#0f111a] text-white min-h-screen flex items-center justify-center p-6">
+<body class="text-white min-h-screen flex items-center justify-center p-6">
     <div id="root"></div>
 
     <script type="text/babel">
         function App() {
-            const [status, setStatus] = React.useState("Connecting...");
+            const [engine, setEngine] = React.useState("Connecting to C++ Server...");
             const [title, setTitle] = React.useState("");
-            const [content, setContent] = React.useState("");
-            const [notes, setNotes] = React.useState([]);
+            const [status, setStatus] = React.useState("In Progress");
+            const [taskList, setTaskList] = React.useState([]);
 
-            // Fetch initial data from Mamba Native C++ Backend
+            // Connect to Mamba Backend on page load
             React.useEffect(() => {
-                fetch('http://localhost:8000/api/notes')
+                fetch('http://localhost:8000/api/info')
                     .then(res => res.json())
-                    .then(data => setStatus(data.message))
-                    .catch(() => setStatus("Offline / Start Mamba Backend"));
+                    .then(data => setEngine(data.engine + " (" + data.database + ")"))
+                    .catch(() => setEngine("Server Offline / Run ./dist/mamba_app"));
             }, []);
 
-            const handleSubmit = (e) => {
+            const handleAddTask = (e) => {
                 e.preventDefault();
-                fetch('http://localhost:8000/api/notes', {
+                fetch('http://localhost:8000/api/tasks', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title, content })
+                    body: JSON.stringify({ title, status })
                 })
                     .then(res => res.json())
                     .then(data => {
-                        setNotes([...notes, { title: data.title, content: data.content }]);
+                        setTaskList([...taskList, { title: data.title, status: data.task_status }]);
                         setTitle("");
-                        setContent("");
                     });
             };
 
             return (
-                <div class="max-w-md w-full bg-[#181a24] p-8 rounded-2xl border border-gray-800 shadow-2xl">
+                <div class="max-w-md w-full bg-[#181a24] p-8 rounded-3xl border border-gray-800 shadow-2xl">
                     <div class="text-center mb-6">
-                        <h1 class="text-3xl font-extrabold text-[#00e676]">🐍 Mamba + React</h1>
-                        <p class="text-gray-400 text-sm mt-1">Fullstack App Powered by Compiled Native C++</p>
-                        <span class="inline-block mt-3 px-3 py-1 bg-gray-800 text-[#00e676] rounded-full text-xs font-mono">
-                            {status}
+                        <div class="text-4xl mb-2">🐍</div>
+                        <h1 class="text-2xl font-black text-white">Mamba Task Manager</h1>
+                        <p class="text-xs text-gray-400 mt-1">React SPA + Compiled Native C++ Backend</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-[#00e676]/10 text-[#00e676] border border-[#00e676]/30 rounded-full text-xs font-mono font-bold">
+                            {engine}
                         </span>
                     </div>
 
-                    <form onSubmit={handleSubmit} class="space-y-4">
-                        <input
-                            type="text"
-                            placeholder="Note Title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            class="w-full bg-[#0f111a] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-[#00e676]"
-                            required
-                        />
-                        <textarea
-                            placeholder="Note Content"
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                            class="w-full bg-[#0f111a] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-[#00e676]"
-                            required
-                        ></textarea>
-                        <button type="submit" class="w-full bg-[#00e676] hover:bg-[#00c853] text-black font-bold py-3 rounded-lg transition duration-200">
-                            Save Note via Mamba Backend
+                    <form onSubmit={handleAddTask} class="space-y-4">
+                        <div>
+                            <label class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Task Title</label>
+                            <input
+                                type="text"
+                                placeholder="e.g. Build Mamba 0.2 Release"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                class="w-full bg-[#0f111a] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-[#00e676] text-sm"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Task Status</label>
+                            <select
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                                class="w-full bg-[#0f111a] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-[#00e676] text-sm"
+                            >
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Pending Review">Pending Review</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-[#00e676] hover:bg-[#00c853] text-black font-extrabold py-3.5 rounded-xl transition duration-200 shadow-lg">
+                            + Add Task to SQLite Database
                         </button>
                     </form>
 
                     <div class="mt-8">
-                        <h2 class="text-lg font-bold text-gray-300 mb-3">Saved Notes (SQLite):</h2>
+                        <h2 class="text-sm font-bold text-gray-300 uppercase tracking-wider mb-3">Tasks Stored in SQLite:</h2>
                         <div class="space-y-3">
-                            {notes.length === 0 ? <p class="text-gray-500 text-sm text-center">No notes added yet.</p> : null}
-                            {notes.map((note, index) => (
-                                <div key={index} class="bg-[#0f111a] p-4 rounded-lg border border-gray-800">
-                                    <h3 class="font-bold text-[#00e676]">{note.title}</h3>
-                                    <p class="text-gray-300 text-sm mt-1">{note.content}</p>
+                            {taskList.length === 0 ? <p class="text-gray-500 text-xs text-center py-4 border border-dashed border-gray-800 rounded-xl">No tasks created yet.</p> : null}
+                            {taskList.map((task, index) => (
+                                <div key={index} class="bg-[#0f111a] p-4 rounded-xl border border-gray-800 flex justify-between items-center">
+                                    <div>
+                                        <h3 class="font-bold text-white text-sm">{task.title}</h3>
+                                        <span class="text-[10px] text-[#00e676] font-mono">SQLite Record #{index + 1}</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 bg-gray-800 text-gray-300 rounded-lg text-xs font-mono">
+                                        {task.status}
+                                    </span>
                                 </div>
                             ))}
                         </div>

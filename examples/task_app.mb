@@ -1,0 +1,31 @@
+# 1. Initialize Embedded SQLite Database
+let res = db.open("tasks.db")
+db.query("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, title TEXT, status TEXT)")
+
+# 2. System Status Endpoint
+route GET "/api/info" {
+    return json.stringify({
+        "app": "Mamba Task Manager",
+        "version": "0.2.0",
+        "engine": "Native C++20",
+        "database": "Embedded SQLite3"
+    })
+}
+
+# 3. Create Task Endpoint (Safe Parameterized SQL Query)
+route POST "/api/tasks" {
+    let raw_payload = req.body()
+    let payload = json.parse(raw_payload)
+    
+    let title = payload["title"]
+    let task_status = payload["status"]
+    
+    # Safe Parameterized SQL Query
+    db.query("INSERT INTO tasks (title, status) VALUES (?, ?)", [title, task_status])
+    
+    return json.stringify({
+        "status": "created",
+        "title": title,
+        "task_status": task_status
+    })
+}

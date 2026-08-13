@@ -1,0 +1,82 @@
+# =========================================================
+# 🐍 MADE WITH MAMBA — FULL SHOWCASE APPLICATION
+# Uses 100% of Mamba Features:
+# import, db (SQLite), file, env, str, arr, req, json, 
+# try/catch, REST routes, C++ release compilation
+# =========================================================
+
+import "master_config.mb"
+
+# 1. Environment & Database Initialization
+let port_env = env.get("PORT")
+let db_res = db.open("mamba_showcase.db")
+
+db.query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT, role TEXT)")
+
+# 2. File I/O & String Helpers
+file.write("showcase_status.txt", "Made With Mamba Showcase Engine Active")
+let raw_status = file.read("showcase_status.txt")
+let banner = str.upper(raw_status)
+
+# 3. Import Usage & Array Utilities
+let allowed_roles = get_allowed_roles()
+let roles_str = arr.join(allowed_roles, " | ")
+
+print("--- " + banner + " ---")
+print("Supported Roles: " + roles_str)
+
+# ================= REST API ENDPOINTS =================
+
+# GET Route: Info & System Status
+route GET "/api/showcase/info" {
+    return json.stringify({
+        "app": "Made with Mamba Showcase",
+        "status": "healthy",
+        "banner": banner,
+        "roles": roles_str,
+        "version": "0.2.0"
+    })
+}
+
+# POST Route: User Registration (Imported Fn + Parameterized SQL + JSON + Headers + Try/Catch)
+route POST "/api/showcase/users" {
+    try {
+        let auth_token = req.header("Authorization")
+        let raw_body = req.body()
+        let payload = json.parse(raw_body)
+        
+        let name = payload["name"]
+        let email = payload["email"]
+        let role = payload["role"]
+        
+        # Use function imported from master_config.mb
+        let badge = format_badge(name, role)
+        
+        # Check Array membership
+        if arr.contains(allowed_roles, role) {
+            # Parameterized SQL query for DB persistence
+            db.query("INSERT INTO users (name, email, role) VALUES (?, ?, ?)", [name, email, role])
+            
+            # Log action to file
+            file.write("last_user_registered.txt", badge)
+            
+            return json.stringify({
+                "status": "created_in_sqlite",
+                "badge": badge,
+                "name": name,
+                "role": role,
+                "auth_header": auth_token
+            })
+        } else {
+            return json.stringify({
+                "status": "error",
+                "message": "Invalid Role Provided"
+            })
+        }
+    } catch (err) {
+        return json.stringify({
+            "status": "error",
+            "message": "Internal Exception Handled"
+        })
+    }
+}

@@ -1,0 +1,12 @@
+# =========================================================
+# Mamba Module: Config & Helper Functions
+# =========================================================
+
+fn format_badge(name, role) {
+    return "[" + role + "] " + name
+}
+
+fn get_allowed_roles() {
+    let roles = ["Admin", "AI Engineer", "Developer", "Creator"]
+    return roles
+}

@@ -1,6 +1,11 @@
 venv/
 build/
+*.sqlite
 *.db
-hello_mamba.txt
+*.txt
 .DS_Store
 __pycache__/
+benchmarks/mamba_app
+benchmarks/cpp_app
+benchmarks/rust_app
+dist/output_temp.cpp

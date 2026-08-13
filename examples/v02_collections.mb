@@ -1,0 +1,30 @@
+# Mamba 0.2.0 — Array & Map Ergonomic Methods
+
+let fruits = ["Apple", "Banana"]
+
+# 1. Array push & join
+arr.push(fruits, "Cherry")
+let joined = arr.join(fruits, " | ")
+
+print("Joined Array:")
+print(joined)
+
+if arr.contains(fruits, "Banana") {
+    print("Array contains 'Banana'!")
+}
+
+# 2. Map has & remove
+let user = {
+    "name": "Muavia",
+    "role": "AI Engineer",
+    "temp_key": "to_be_deleted"
+}
+
+if map.has(user, "name") {
+    print("Map has key 'name'!")
+}
+
+map.remove(user, "temp_key")
+
+print("User HashMap stringified:")
+print(json.stringify(user))

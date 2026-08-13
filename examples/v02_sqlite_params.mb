@@ -1,0 +1,20 @@
+# Mamba 0.2.0 — Parameterized SQLite Queries Test
+let res = db.open("mamba_v02.db")
+
+db.query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, role TEXT)")
+
+# REST API with Parameterized SQLite Insertion
+route POST "/api/v2/users" {
+    let payload = json.parse(req.body())
+    let name = payload["name"]
+    let role = payload["role"]
+    
+    # Safe Parameterized Binding: db.query(sql, [params])
+    db.query("INSERT INTO users (name, role) VALUES (?, ?)", [name, role])
+    
+    return json.stringify({
+        "status": "parameterized_sqlite_saved",
+        "name": name,
+        "role": role
+    })
+}

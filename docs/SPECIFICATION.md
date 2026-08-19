@@ -1,77 +1,56 @@
-# 🐍 Mamba 0.2.0 Language Specification
+# 🐍 Mamba 0.3.0 Language Specification
 
-Mamba is a multi-target, compiled programming language designed for building high-performance microservices, web APIs, and portable applications.
-
----
-
-## 1. Architectural Philosophy
-Mamba decouples source syntax from execution backends (**"One Mamba Source → Multiple Execution Targets"**):
-
-1. **C++ Native Target (`--target cpp`):** Compiles Mamba code to C++20 and invokes `clang++` (`-O3`) to produce a standalone machine-code executable (`dist/mamba_app`) embedding a zero-dependency POSIX socket HTTP server with a `std::thread` worker pool.
-2. **PHP Web Target (`--target php`):** Transpiles Mamba code into deployment-ready PHP scripts (`dist/app.php`).
-3. **Development Server (`mamba serve`):** In-memory dev server with dynamic route reflection and automatic port fallback.
+Mamba is a multi-target, compiled programming language offering a Python-like developer experience mapped to high-performance C++20 and PHP backends.
 
 ---
 
-## 2. Syntax & Grammar
+## 1. Syntax Basics
 
-### 2.1 Variables
-Variables are declared using the explicit `let` keyword.
-
+### Variables & Strings
+Variables are declared using the explicit `let` keyword. String interpolation is automatic.
 ```mamba
 let app_name = "Mamba API"
 let port = 8000
+print("Starting {app_name} on {port}...")
 ```
 
-### 2.2 Automatic String Interpolation
-
-Any string literal enclosed in double quotes automatically evaluates `{variable}` expressions:
-
+### Comments
 ```mamba
-let user = "Muavia"
-print("Welcome, {user}!")
+# This is a comment
+// This is also a comment
 ```
 
-### 2.3 Comments
+## 2. Ergonomic Collections
 
-Supports both hash (`#`) and double-slash (`//`) line comments.
-
----
-
-## 3. Collections & Ergonomic Methods
-
-### 3.1 Lists / Arrays
-
+### Lists / Arrays
+Arrays come with built-in ergonomic standard functions.
 ```mamba
 let fruits = ["Apple", "Banana"]
-
 arr.push(fruits, "Cherry")          # Appends item
-let joined = arr.join(fruits, " | ") # Joins into string
-if arr.contains(fruits, "Banana") { # Checks existence
-    print("Contains Banana!")
+let joined = arr.join(fruits, " | ") # Returns "Apple | Banana | Cherry"
+if arr.contains(fruits, "Banana") { 
+    print("Found Banana!") 
 }
 ```
 
-### 3.2 HashMaps / Dictionaries
-
+### HashMaps / Dictionaries
+Dictionaries support key checks and dynamic JSON serialization.
 ```mamba
 let user = {
     "name": "Muavia",
     "role": "AI Engineer"
 }
-
-if map.has(user, "name") {          # Checks key existence
+if map.has(user, "name") {          
     print(user["name"])
 }
-map.remove(user, "role")           # Removes key
+map.remove(user, "role")           
 ```
 
----
+## 3. Control Flow & Exceptions
 
-## 4. Functions & Control Flow
-
+### Functions & Logic
 ```mamba
-fn add(a, b) {
+fn calculate(a, b) {
     return a + b
 }
 
@@ -87,57 +66,46 @@ while i < 5 {
 }
 ```
 
----
-
-## 5. Exception Handling
-
+### Try / Catch Exception Handling
 ```mamba
 try {
     let content = file.read("data.txt")
 } catch (err) {
-    print("Failed to read file")
+    print("Handled Exception!")
 }
 ```
 
----
+## 4. Web Routing Engine & Context
 
-## 6. Web Routing Engine
-
-Web endpoints are first-class language keywords built into Mamba:
+Web endpoints are first-class language keywords. The `req` object parses request contexts natively.
 
 ```mamba
-route GET "/api/search" {
-    let q = req.query("q")
-    return json.stringify({ "search": q })
-}
-
 route POST "/api/users" {
+    let auth = req.header("Authorization")
+    let search = req.query("q")
+    
     let payload = json.parse(req.body())
-    let name = payload["name"]
-    let role = payload["role"]
+    let user_name = payload["name"]
     
-    # Safe Parameterized SQL Query
-    db.query("INSERT INTO users (name, role) VALUES (?, ?)", [name, role])
-    
-    return json.stringify({ "status": "created", "name": name })
+    return json.stringify({ "status": "created", "name": user_name })
 }
 ```
 
----
+Note: All Mamba routes return native `Access-Control-Allow-Origin: *` CORS headers.
 
-## 7. Embedded Database Engine (db)
+## 5. Embedded Database Engine (`db`)
 
-Mamba natively links SQLite (`-lsqlite3`) at compile time and supports prepared statement parameter binding:
+Mamba natively links SQLite (`-lsqlite3`) and supports secure Prepared Statement Parameter Binding to prevent SQL injection.
 
 ```mamba
 let conn = db.open("app.db")
 db.query("CREATE TABLE IF NOT EXISTS users (name TEXT, role TEXT)")
+
+# Safe Parameterized SQL
 db.query("INSERT INTO users (name, role) VALUES (?, ?)", ["Muavia", "AI Engineer"])
 ```
 
----
-
-## 8. Standard Library Reference
+## 6. Standard Library Reference
 
 | Module     | Method                          | Description                         |
 | :--------- | :------------------------------ | :---------------------------------- |
@@ -151,18 +119,17 @@ db.query("INSERT INTO users (name, role) VALUES (?, ?)", ["Muavia", "AI Engineer
 | **`db`**   | `db.query("SQL", [params])`     | Executes parameterized SQL query.   |
 | **`str`**  | `str.upper(s)` / `str.lower(s)` | String case conversion.             |
 | **`str`**  | `str.replace(s, old, new)`      | Substring replacement.              |
-| **`str`**  | `str.len(s)`                    | Returns string length.              |
 | **`arr`**  | `arr.push(a, val)`              | Appends item to array.              |
 | **`arr`**  | `arr.contains(a, val)`          | Checks if item exists in array.     |
 | **`arr`**  | `arr.join(a, sep)`              | Formats array into string.          |
 | **`map`**  | `map.has(m, key)`               | Checks if key exists in HashMap.    |
 | **`map`**  | `map.remove(m, key)`            | Removes key from HashMap.           |
 
----
-
-## 9. Native Testing Syntax
+## 7. Native Testing & Modules
 
 ```mamba
+import "helpers.mb"
+
 test "Verify Addition" {
     assert(add(10, 20) == 30)
 }

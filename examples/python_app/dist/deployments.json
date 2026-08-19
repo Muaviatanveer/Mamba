@@ -1,0 +1,10 @@
+{
+  "python_app": {
+    "type": "PYTHON",
+    "pid": 9689,
+    "port": 8081,
+    "status": "HEALTHY (200 OK)",
+    "url": "http://localhost:8081",
+    "deployed_at": "2026-08-19 11:38:52"
+  }
+}

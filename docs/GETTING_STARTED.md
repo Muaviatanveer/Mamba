@@ -1,28 +1,21 @@
-# 🏁 Getting Started with Mamba 0.2.0
+# 🏁 Getting Started with Mamba Cloud (v0.3.0)
 
-Learn how to build, test, and deploy a REST API in Mamba in under 5 minutes.
+Learn how to build, compile, and deploy a REST API to your own Mamba Cloud PaaS in under 5 minutes.
 
-Step 1: Scaffold Your Application
+---
+
+## Step 1: Scaffold Your Application
 
 ```bash
-./mamba init my_mamba_api
-cd my_mamba_api
+./mamba init my_api
+cd my_api
 ```
 
-Step 2: Write Your Application (main.mb)
+## Step 2: Write Your Code (`main.mb`)
 
 ```mamba
-# Initialize SQLite database
 let res = db.open("app.db")
 db.query("CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY, name TEXT)")
-
-# GET Endpoint
-route GET "/api/status" {
-    return json.stringify({
-        "status": "online",
-        "engine": "Mamba Native C++"
-    })
-}
 
 # POST Endpoint (Safe Parameterized Query)
 route POST "/api/items" {
@@ -38,34 +31,44 @@ route POST "/api/items" {
 }
 ```
 
-Step 3: Run Unit Tests
+## Step 3: Deploy to Mamba Cloud Runtime
+
+Mamba Cloud will automatically compile your code to a native C++ binary and deploy the process container.
 
 ```bash
-../mamba test test_app.mb
+../mamba deploy 8081
 ```
 
-Step 4: Build Release Binary
-
-```bash
-../mamba build main.mb --release
-```
-
-Output generated in dist/:
-
+Expected Output:
 ```text
-dist/
-├── mamba_app   (80.1 KB Standalone Native Executable)
-└── mamba.json
+✨ DEPLOYMENT SUCCESSFUL!
+   ➜ Type: MAMBA
+   ➜ Local Port: http://localhost:8081
+   ➜ Custom Domain: http://my_api.mamba.local:8000
 ```
 
-Step 5: Execute Standalone Binary
+## Step 4: Route via Domain Gateway
+
+Launch the Mamba Cloud Reverse Proxy to enable custom domain routing:
 
 ```bash
-PORT=3000 ./dist/mamba_app
+../mamba proxy 8000
 ```
 
-Test your API:
+Test your deployed API using the Virtual Host domain!
 
 ```bash
-curl -X POST http://localhost:3000/api/items -d '{"name": "Mamba Compiler"}'
+curl -X POST http://my_api.mamba.local:8000/api/items -d '{"name": "Mamba Compiler"}'
 ```
+
+## Step 5 (Optional): Git Push Auto-Deployment
+
+Set up your own bare-metal deployment server:
+
+```bash
+../mamba git-init my_api_repo
+git remote add mamba_cloud ../mamba_cloud_repos/my_api_repo.git
+git push mamba_cloud main
+```
+
+Mamba Cloud will intercept the push, compile your C++ binary, and swap the processes automatically with zero downtime!

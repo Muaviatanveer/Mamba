@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mamba 0.2 LinkedIn Carousel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@400;600&family=Inter:ital,wght@0,400;0,700;0,900;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E7E3D8;
+            color: #171717;
+        }
+
+        .mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .handwritten {
+            font-family: 'Caveat', cursive;
+        }
+
+        .paper-card {
+            background-color: #F4F1E8;
+            border: 1px solid #D8D3C5;
+            box-shadow: 0 10px 30px -5px rgba(23, 23, 23, 0.08);
+        }
+    </style>
+</head>
+
+<body class="p-10 flex flex-col items-center space-y-16">
+
+    <!-- Instructions Banner -->
+    <div class="bg-[#171717] text-[#F4F1E8] p-4 rounded-xl text-center max-w-xl text-sm font-mono">
+        <p class="font-bold text-[#20A85A]">📝 Mamba 0.2.0 Carousel Generator</p>
+        <p class="text-xs text-gray-400 mt-1">Press <kbd class="bg-gray-800 px-2 py-0.5 rounded text-white">Cmd + Shift
+                + 4</kbd> on Mac to snapshot each slide for LinkedIn!</p>
+    </div>
+
+
+    <!-- ================= SLIDE 1: THE DDOS ATTACK HERO ================= -->
+    <div class="paper-card w-[850px] h-[680px] p-10 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+        <div class="flex justify-between items-center border-b border-[#D8D3C5] pb-3">
+            <div class="font-black tracking-widest text-xs uppercase text-[#77736B]">LAB NOTEBOOK // STRESS TEST
+                EVIDENCE</div>
+            <div class="font-mono text-xs font-bold text-[#20A85A]">MAMBA 0.2.0 🐍</div>
+        </div>
+
+        <div class="my-2">
+            <h1 class="text-4xl font-black tracking-tight leading-tight text-[#171717]">
+                I fired 376,000 HTTP requests at my programming language.
+            </h1>
+            <p class="handwritten text-2xl text-[#20A85A] mt-1">
+                20 seconds. 500 concurrent connections. Here is what happened:
+            </p>
+        </div>
+
+        <!-- Terminal Evidence Box -->
+        <div
+            class="bg-[#111111] text-[#E0E0E0] p-5 rounded-xl mono text-xs leading-relaxed border border-[#333333] shadow-inner relative">
+            <div class="flex justify-between items-center text-gray-500 border-b border-gray-800 pb-2 mb-3 text-[11px]">
+                <span class="text-gray-400">$ autocannon -c 200 -d 10 -m POST /api/register</span>
+                <span class="text-[#20A85A] font-bold">0 TIMEOUTS</span>
+            </div>
+            <p class="text-gray-300">Running 10s stress test @ http://localhost:8000/api/register</p>
+            <p class="text-gray-400"> ➜ Total Requests Fired: <span class="text-white font-bold">182,000 requests in
+                    10s</span></p>
+            <p class="text-gray-400"> ➜ POST DB Write Throughput: <span class="text-[#20A85A] font-bold">9,072
+                    req/sec</span></p>
+            <p class="text-gray-400"> ➜ Process Status: <span class="text-[#20A85A] font-bold">0 Crashes | 100% Solid
+                    Uptime</span></p>
+        </div>
+
+        <!-- Bottom Callout -->
+        <div
+            class="bg-[#EFECE3] border-l-4 border-[#20A85A] p-3 text-xs font-mono text-[#171717] flex justify-between items-center">
+            <span>⚡ POST DATABASE WRITE THROUGHPUT JUMPED FROM <b>2.4k ➜ 9,072 REQ/SEC</b> (3.7x FASTER).</span>
+            <span class="font-bold text-[#20A85A]">0 TIMEOUTS</span>
+        </div>
+
+        <div class="flex justify-between items-center text-xs text-[#77736B] pt-3 border-t border-[#D8D3C5] font-mono">
+            <span>MULTI-THREADED C++ POSIX SERVER RUNTIME</span>
+            <span>SLIDE 01/05</span>
+        </div>
+    </div>
+
+
+    <!-- ================= SLIDE 2: MAMBA 0.2 FEATURES ================= -->
+    <div class="paper-card w-[850px] h-[680px] p-10 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+        <div class="flex justify-between items-center border-b border-[#D8D3C5] pb-3">
+            <div class="font-black tracking-widest text-xs uppercase text-[#77736B]">RELEASE HIGHLIGHTS</div>
+            <div class="font-mono text-xs font-bold text-[#20A85A]">SLIDE 02/05</div>
+        </div>
+
+        <div>
+            <h2 class="text-4xl font-black text-[#171717] tracking-tight">
+                Mamba 0.2.0 — Production Foundations
+            </h2>
+            <p class="handwritten text-2xl text-[#20A85A] mt-1">
+                Moving from "Can I build a language?" to "Can people build applications with it?"
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 my-auto">
+            <div class="bg-[#EFECE3] border border-[#D8D3C5] p-5 rounded-xl">
+                <p class="text-xs font-mono text-[#20A85A] font-bold">🗄️ PARAMETERIZED SQL SAFETY</p>
+                <p class="text-sm font-bold text-[#171717] mt-1">`db.query(sql, [params])`</p>
+                <p class="text-xs text-[#77736B] mt-1">Native SQLite3 prepared statement parameter binding
+                    (`sqlite3_prepare_v2`).</p>
+            </div>
+
+            <div class="bg-[#EFECE3] border border-[#D8D3C5] p-5 rounded-xl">
+                <p class="text-xs font-mono text-[#20A85A] font-bold">🧵 20-THREAD C++ WORKER POOL</p>
+                <p class="text-sm font-bold text-[#171717] mt-1">`std::thread` Worker Dispatch</p>
+                <p class="text-xs text-[#77736B] mt-1">Parallel request handling across all CPU cores with 4,096 socket
+                    backlog.</p>
+            </div>
+
+            <div class="bg-[#EFECE3] border border-[#D8D3C5] p-5 rounded-xl">
+                <p class="text-xs font-mono text-[#20A85A] font-bold">📊 ERGONOMIC COLLECTIONS</p>
+                <p class="text-sm font-bold text-[#171717] mt-1">`arr.push()`, `map.has()`</p>
+                <p class="text-xs text-[#77736B] mt-1">Built-in collection utilities (`arr.contains`, `arr.join`,
+                    `map.remove`).</p>
+            </div>
+
+            <div class="bg-[#EFECE3] border border-[#D8D3C5] p-5 rounded-xl">
+                <p class="text-xs font-mono text-[#20A85A] font-bold">🌐 CORS & REACT SUPPORT</p>
+                <p class="text-sm font-bold text-[#171717] mt-1">`Access-Control-Allow-Origin`</p>
+                <p class="text-xs text-[#77736B] mt-2">Native preflight OPTIONS support for React/Vue SPA frontends.</p>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center text-xs text-[#77736B] pt-3 border-t border-[#D8D3C5] font-mono">
+            <span>PARAMETERIZED QUERIES PROTECT USER-SUPPLIED VALUES</span>
+            <span>github.com/Muaviatanveer/Mamba</span>
+        </div>
+    </div>
+
+
+    <!-- ================= SLIDE 3: PARAMETERIZED SQL CODE ================= -->
+    <div class="paper-card w-[850px] h-[680px] p-10 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+        <div class="flex justify-between items-center border-b border-[#D8D3C5] pb-3">
+            <div class="font-black tracking-widest text-xs uppercase text-[#77736B]">DATABASE SAFETY // MAMBA 0.2</div>
+            <div class="font-mono text-xs font-bold text-[#20A85A]">SLIDE 03/05</div>
+        </div>
+
+        <div>
+            <h2 class="text-3xl font-black text-[#171717] tracking-tight">
+                Safe Database API
+            </h2>
+            <p class="handwritten text-2xl text-[#20A85A] mt-1">
+                Protecting user-supplied values with prepared statements.
+            </p>
+        </div>
+
+        <!-- Code Box -->
+        <div
+            class="bg-[#111111] text-[#E0E0E0] p-6 rounded-xl mono text-xs leading-relaxed border border-[#20A85A]/60 shadow-inner">
+            <div class="text-gray-500 border-b border-gray-800 pb-2 mb-3 text-[11px] flex justify-between">
+                <span>examples/crud_api.mb</span>
+                <span class="text-[#20A85A]">SQLite Prepared Statements</span>
+            </div>
+            <pre class="text-gray-300">
+<span class="text-purple-400">let</span> db_status = db.open(<span class="text-emerald-300">"app.db"</span>)
+
+<span class="text-[#20A85A] font-bold">route POST</span> <span class="text-emerald-300">"/api/users"</span> {
+    <span class="text-purple-400">let</span> payload = json.parse(req.body())
+    <span class="text-purple-400">let</span> name = payload[<span class="text-emerald-300">"name"</span>]
+    <span class="text-purple-400">let</span> role = payload[<span class="text-emerald-300">"role"</span>]
+
+    <span class="text-gray-500"># Safe Parameterized SQLite Query</span>
+    db.query(<span class="text-emerald-300">"INSERT INTO users (name, role) VALUES (?, ?)"</span>, [name, role])
+
+    <span class="text-purple-400">return</span> json.stringify({
+        <span class="text-emerald-300">"status"</span>: <span class="text-emerald-300">"saved_in_sqlite"</span>,
+        <span class="text-emerald-300">"name"</span>: name
+    })
+}</pre>
+        </div>
+
+        <div class="flex justify-between items-center text-xs text-[#77736B] pt-3 border-t border-[#D8D3C5] font-mono">
+            <span>NO MANUAL STRING CONCATENATION. NO INJECTION HAZARDS.</span>
+            <span>MAMBA 0.2.0</span>
+        </div>
+    </div>
+
+
+    <!-- ================= SLIDE 4: BENCHMARK LEADERBOARD ================= -->
+    <div class="paper-card w-[850px] h-[680px] p-10 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+        <div class="flex justify-between items-center border-b border-[#D8D3C5] pb-3">
+            <div class="font-black tracking-widest text-xs uppercase text-[#77736B]">3-RUN REPRODUCIBLE BENCHMARK</div>
+            <div class="font-mono text-xs font-bold text-[#20A85A]">SLIDE 04/05</div>
+        </div>
+
+        <div class="flex justify-between items-end">
+            <div>
+                <h2 class="text-3xl font-black text-[#171717] tracking-tight">
+                    1,000 Concurrency Stress Test
+                </h2>
+                <p class="text-xs font-mono text-[#77736B] mt-1">macOS 15.5 | Apple Silicon | 150,000 Requests</p>
+            </div>
+            <div class="handwritten text-3xl text-[#20A85A] text-right font-bold">
+                19.8k req/s @ 1,000 sockets.<br><span class="text-xl text-[#77736B]">Zero dropped connections.</span>
+            </div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="space-y-3.5 my-auto mono text-xs">
+            <div>
+                <div class="flex justify-between mb-1 font-bold text-[#171717]">
+                    <span>Raw C++ (clang++ -O3)</span>
+                    <span>26,051 req/s</span>
+                </div>
+                <div class="w-full bg-[#EFECE3] h-5 rounded-md overflow-hidden border border-[#D8D3C5]">
+                    <div class="bg-[#171717] h-full" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-1 text-[#77736B]">
+                    <span>Rust (rustc -O)</span>
+                    <span>22,993 req/s</span>
+                </div>
+                <div class="w-full bg-[#EFECE3] h-5 rounded-md overflow-hidden border border-[#D8D3C5]">
+                    <div class="bg-[#77736B] h-full" style="width: 88%;"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-1 font-bold text-[#20A85A]">
+                    <span>🐍 MAMBA NATIVE 0.2 (-O3)</span>
+                    <span>19,865 req/s</span>
+                </div>
+                <div class="w-full bg-[#EFECE3] h-5 rounded-md overflow-hidden border border-[#20A85A]/40">
+                    <div class="bg-[#20A85A] h-full" style="width: 76%;"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-1 text-[#77736B]">
+                    <span>PHP (cli-server)</span>
+                    <span>15,806 req/s</span>
+                </div>
+                <div class="w-full bg-[#EFECE3] h-5 rounded-md overflow-hidden border border-[#D8D3C5]">
+                    <div class="bg-[#A09C93] h-full" style="width: 60%;"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-1 text-[#77736B]">
+                    <span>Python (http.server)</span>
+                    <span>15,208 req/s</span>
+                </div>
+                <div class="w-full bg-[#EFECE3] h-5 rounded-md overflow-hidden border border-[#D8D3C5]">
+                    <div class="bg-[#A09C93] h-full" style="width: 58%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center text-xs text-[#77736B] pt-3 border-t border-[#D8D3C5] font-mono">
+            <span>31.9% FASTER THAN PYTHON | 24.0% FASTER THAN PHP</span>
+            <span>0 FAILURES</span>
+        </div>
+    </div>
+
+
+    <!-- ================= SLIDE 5: OPEN SOURCE CTA ================= -->
+    <div
+        class="paper-card w-[850px] h-[680px] p-10 rounded-2xl flex flex-col justify-between relative overflow-hidden text-center">
+        <div class="flex justify-between items-center border-b border-[#D8D3C5] pb-3 text-left">
+            <div class="font-black tracking-widest text-xs uppercase text-[#77736B]">RELEASE // v0.2.0</div>
+            <div class="font-mono text-xs font-bold text-[#20A85A]">SLIDE 05/05</div>
+        </div>
+
+        <div class="my-auto space-y-5">
+            <div class="text-6xl">🐍</div>
+
+            <div class="space-y-2">
+                <h2 class="text-3xl font-black text-[#171717]">Mamba 0.2.0 is live.</h2>
+                <h1 class="text-5xl font-black text-[#20A85A] tracking-tight">Go break it.</h1>
+            </div>
+
+            <p class="handwritten text-3xl text-[#77736B]">
+                Star it, fork it, compile something weird with it.
+            </p>
+
+            <div
+                class="inline-block bg-[#171717] text-[#F4F1E8] px-6 py-3.5 rounded-xl mono text-sm font-bold shadow-lg border border-gray-800">
+                github.com/Muaviatanveer/Mamba
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center text-xs text-[#77736B] pt-3 border-t border-[#D8D3C5] font-mono">
+            <span>MAMBA PROGRAMMING LANGUAGE v0.2.0</span>
+            <span>MIT LICENSE</span>
+        </div>
+    </div>
+
+</body>
+
+</html>

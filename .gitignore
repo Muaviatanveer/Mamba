@@ -9,3 +9,11 @@ benchmarks/mamba_app
 benchmarks/cpp_app
 benchmarks/rust_app
 dist/output_temp.cpp
+
+# Mamba Cloud Runtime Files
+mamba_cloud_repos/
+mamba_cloud_workspace/
+dist/mamba.log
+dist/deployments.json
+dist/mamba_app
+compiler/test_fstring.py

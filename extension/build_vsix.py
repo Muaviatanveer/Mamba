@@ -21,7 +21,7 @@ package_json = {
   "name": "mamba-lang",
   "displayName": "Mamba Programming Language",
   "description": "Official Black Mamba Language Support & Syntax Highlighting (.mb)",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "mamba-dev",
   "icon": "icon.png",
   "engines": {
@@ -106,7 +106,7 @@ tm_grammar = {
 vsix_manifest = """<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
   <Metadata>
-    <Identity Id="mamba-lang" Version="0.2.0" Publisher="mamba-dev" Language="en-US" />
+    <Identity Id="mamba-lang" Version="0.3.0" Publisher="mamba-dev" Language="en-US" />
     <DisplayName>Mamba Programming Language</DisplayName>
     <Description>Official Black Mamba Language Support</Description>
     <Categories>Programming Languages</Categories>
@@ -133,7 +133,7 @@ content_types = """<?xml version="1.0" encoding="utf-8"?>
 """
 
 # 3. Build .vsix Package inside extension/ directory
-vsix_filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mamba-0.2.0.vsix")
+vsix_filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mamba-0.3.0.vsix")
 
 with zipfile.ZipFile(vsix_filename, 'w', zipfile.ZIP_DEFLATED) as vsix:
     vsix.writestr("[Content_Types].xml", content_types)

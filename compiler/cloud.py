@@ -15,7 +15,7 @@ DEPLOYMENTS_FILE = "dist/deployments.json"
 LOG_FILE = "dist/mamba.log"
 REPOS_DIR = "mamba_cloud_repos"
 WORKSPACE_DIR = "mamba_cloud_workspace"
-ROOT_DOMAIN = "mamba.local"
+ROOT_DOMAIN = "mambacloud.app"
 
 def fix_terminal():
     sys.stdout.write("\r\033[K\033[0m")
@@ -127,8 +127,8 @@ def deploy_app(project_dir=".", port=8080, public=False, live=False):
     except Exception:
         health_status = "RUNNING"
 
-    app_id = os.path.basename(os.path.abspath(project_dir)).lower().replace("_", "-")
-    custom_domain = f"http://{app_id}.{ROOT_DOMAIN}:8000"
+    app_id = os.path.basename(os.path.abspath(project_dir)).lower().replace("_", "-").replace(" ", "-")
+    custom_domain = f"https://{app_id}.{ROOT_DOMAIN}"
 
     live_url = "N/A"
     if live or public:

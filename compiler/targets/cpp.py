@@ -268,7 +268,12 @@ int main() {{
         }}
     }};
 
-    start_native_cpp_server(8000, mamba_router);
+    int mamba_port = 8000;
+    const char* env_p = std::getenv("PORT");
+    if (env_p != nullptr) {{
+        mamba_port = std::atoi(env_p);
+    }}
+    start_native_cpp_server(mamba_port, mamba_router);
     return 0;
 }}
 """

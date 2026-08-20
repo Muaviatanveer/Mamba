@@ -1,5 +1,8 @@
-# 🐍 Mamba Programming Language & Cloud Ecosystem
+<p align="center">
+  <img src="extension/logo.png" alt="Mamba Logo" width="200"/>
+</p>
 
+# 🐍 Mamba Programming Language & Cloud Ecosystem
 [![Release](https://img.shields.io/github/v/release/Muaviatanveer/Mamba?color=00e676&label=Mamba%20v0.3.0)](https://github.com/Muaviatanveer/Mamba/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 

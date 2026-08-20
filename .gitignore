@@ -18,3 +18,4 @@ dist/deployments.json
 dist/mamba_app
 compiler/test_fstring.py
 docs_website/
+docs_webiste/

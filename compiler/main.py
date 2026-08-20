@@ -1,3 +1,4 @@
+# compiler/main.py - Mamba CLI Main Controller
 import sys
 from compiler.builder import build_and_run, mamba_build, run_tests
 from compiler.tooling import init_project, format_code
@@ -10,13 +11,18 @@ def main():
             print("Usage:")
             print("  ./mamba <script.mb> [--target cpp|php] [--release]")
             print("  ./mamba build <script.mb> [--target cpp|php] [--release]")
-            print("  ./mamba deploy [port] [--live]")
+            print("  ./mamba deploy [port] [--live] [--cloud]")
             print("  ./mamba proxy [port]")
             print("  ./mamba git-init <repo_name>")
             print("  ./mamba status")
             print("  ./mamba logs")
             print("  ./mamba stop")
         elif sys.argv[1] == "deploy":
+            if len(sys.argv) > 2 and sys.argv[2] == "--cloud":
+                from compiler.cloud import deploy_to_remote_cloud
+                deploy_to_remote_cloud(".")
+                sys.exit(0)
+            
             port = 8080
             live = "--live" in sys.argv or "--public" in sys.argv
             for arg in sys.argv[2:]:
@@ -24,7 +30,7 @@ def main():
                     port = int(arg)
             deploy_app(port=port, live=live)
         elif sys.argv[1] == "proxy":
-            port = int(sys.argv[2]) if len(sys.argv) > 2 else 9000
+            port = int(sys.argv[2]) if len(sys.argv) > 2 else 8000
             start_reverse_proxy(proxy_port=port)
         elif sys.argv[1] == "git-init":
             repo_name = sys.argv[2] if len(sys.argv) > 2 else "my_app"
@@ -36,7 +42,7 @@ def main():
         elif sys.argv[1] == "stop":
             stop_deployment()
         elif sys.argv[1] == "build":
-            script = "examples/master_app.mb"
+            script = "main.mb"
             target = "cpp"
             release = "--release" in sys.argv or "-r" in sys.argv or True
             
